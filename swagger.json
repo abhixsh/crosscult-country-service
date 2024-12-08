@@ -14,6 +14,9 @@
         "/countries": {
             "get": {
                 "summary": "Get all countries",
+                "tags": [
+                    "Countries"
+                ],
                 "responses": {
                     "200": {
                         "description": "List of countries",
@@ -28,6 +31,9 @@
             },
             "post": {
                 "summary": "Create a new country",
+                "tags": [
+                    "Countries"
+                ],
                 "parameters": [
                     {
                         "name": "country",
@@ -51,6 +57,9 @@
         "/country/{id}": {
             "get": {
                 "summary": "Get a country by ID",
+                "tags": [
+                    "Countries"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -73,6 +82,9 @@
             },
             "put": {
                 "summary": "Update a country",
+                "tags": [
+                    "Countries"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -103,6 +115,9 @@
             },
             "delete": {
                 "summary": "Delete a country",
+                "tags": [
+                    "Countries"
+                ],
                 "parameters": [
                     {
                         "name": "id",
