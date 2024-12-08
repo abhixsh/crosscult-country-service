@@ -15,6 +15,9 @@
             "post": {
                 "summary": "Create a new country",
                 "description": "Adds a new country to the database.",
+                "tags": [
+                    "Countries"
+                ],
                 "parameters": [
                     {
                         "name": "name",
@@ -86,6 +89,9 @@
             "get": {
                 "summary": "Get all countries",
                 "description": "Retrieves all countries with linked history, traditions, and food.",
+                "tags": [
+                    "Countries"
+                ],
                 "responses": {
                     "200": {
                         "description": "Successfully retrieved list of countries",
@@ -106,6 +112,9 @@
             "get": {
                 "summary": "Get a country by ID",
                 "description": "Retrieves a specific country by its ID.",
+                "tags": [
+                    "Countries"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -133,6 +142,9 @@
             "put": {
                 "summary": "Update a country",
                 "description": "Updates the details of a specific country.",
+                "tags": [
+                    "Countries"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -169,6 +181,9 @@
             "delete": {
                 "summary": "Delete a country",
                 "description": "Deletes a specific country.",
+                "tags": [
+                    "Countries"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -195,6 +210,9 @@
             "post": {
                 "summary": "Create a new food",
                 "description": "Adds a new food item to the database.",
+                "tags": [
+                    "Food"
+                ],
                 "parameters": [
                     {
                         "name": "description",
@@ -239,6 +257,9 @@
             "get": {
                 "summary": "Get all food items",
                 "description": "Retrieves all food items.",
+                "tags": [
+                    "Food"
+                ],
                 "responses": {
                     "200": {
                         "description": "Successfully retrieved list of foods",
@@ -259,6 +280,9 @@
             "get": {
                 "summary": "Get a food item by ID",
                 "description": "Retrieves a specific food item by its ID.",
+                "tags": [
+                    "Food"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -286,6 +310,9 @@
             "put": {
                 "summary": "Update a food item",
                 "description": "Updates the details of a specific food item.",
+                "tags": [
+                    "Food"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -322,6 +349,9 @@
             "delete": {
                 "summary": "Delete a food item",
                 "description": "Deletes a specific food item.",
+                "tags": [
+                    "Food"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -348,6 +378,9 @@
             "post": {
                 "summary": "Create a new history",
                 "description": "Adds a new history record.",
+                "tags": [
+                    "History"
+                ],
                 "parameters": [
                     {
                         "name": "description",
@@ -392,6 +425,9 @@
             "get": {
                 "summary": "Get all history records",
                 "description": "Retrieves all history records.",
+                "tags": [
+                    "History"
+                ],
                 "responses": {
                     "200": {
                         "description": "Successfully retrieved history records",
@@ -412,6 +448,9 @@
             "get": {
                 "summary": "Get a history by ID",
                 "description": "Retrieves a specific history record by its ID.",
+                "tags": [
+                    "History"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -439,6 +478,9 @@
             "put": {
                 "summary": "Update a history record",
                 "description": "Updates the details of a specific history record.",
+                "tags": [
+                    "History"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -475,6 +517,9 @@
             "delete": {
                 "summary": "Delete a history record",
                 "description": "Deletes a specific history record.",
+                "tags": [
+                    "History"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -501,6 +546,9 @@
             "post": {
                 "summary": "Create a new tradition",
                 "description": "Adds a new tradition record.",
+                "tags": [
+                    "Traditions"
+                ],
                 "parameters": [
                     {
                         "name": "description",
@@ -545,6 +593,9 @@
             "get": {
                 "summary": "Get all traditions",
                 "description": "Retrieves all traditions records.",
+                "tags": [
+                    "Traditions"
+                ],
                 "responses": {
                     "200": {
                         "description": "Successfully retrieved traditions",
@@ -565,6 +616,9 @@
             "get": {
                 "summary": "Get a tradition by ID",
                 "description": "Retrieves a specific tradition by its ID.",
+                "tags": [
+                    "Traditions"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -592,6 +646,9 @@
             "put": {
                 "summary": "Update a tradition record",
                 "description": "Updates the details of a specific tradition record.",
+                "tags": [
+                    "Traditions"
+                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -628,6 +685,9 @@
             "delete": {
                 "summary": "Delete a tradition record",
                 "description": "Deletes a specific tradition record.",
+                "tags": [
+                    "Traditions"
+                ],
                 "parameters": [
                     {
                         "name": "id",
