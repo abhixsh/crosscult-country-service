@@ -1,0 +1,29 @@
+@startuml
+class Country {
+    +String name
+    +File image
+    +String description
+}
+
+class History {
+    +String description
+    +File mainImage
+    +File squareImage
+}
+
+class Traditions {
+    +String description
+    +File mainImage
+    +File squareImage
+}
+
+class Food {
+    +String description
+    +File mainImage
+    +File squareImage
+}
+
+Country "1" -- "1" History
+Country "1" -- "1" Traditions
+Country "1" -- "1" Food
+@enduml
