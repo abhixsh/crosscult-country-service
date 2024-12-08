@@ -6,14 +6,11 @@ const Food = require('../models/foodModel');
 // Create a new country
 const createCountry = async (req, res) => {
     try {
-        const { name, image, description, historyId, traditionsId, foodId } = req.body;
+        const { name, image, description, history, traditions, food } = req.body;
         const country = new Country({
             name,
             image,
             description,
-            history: historyId,
-            traditions: traditionsId,
-            food: foodId
         });
         await country.save();
         res.status(201).json(country);
