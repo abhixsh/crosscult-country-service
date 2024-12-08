@@ -1,10 +1,31 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const countrySchema = new Schema({
-    name: { type: String, required: true },
-    image: { type: Schema.Types.ObjectId, ref: 'fs.files' },
-    description: { type: String, required: true },
+const countrySchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  image: {
+    type: String, 
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  history: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'History'
+  },
+  traditions: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Traditions'
+  },
+  food: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Food'
+  }
 });
 
-module.exports = mongoose.model('Country', countrySchema);
+const Country = mongoose.model('Country', countrySchema);
+module.exports = Country;

@@ -1,10 +1,19 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const historySchema = new Schema({
-    description: { type: String, required: true },
-    mainImage: { type: Schema.Types.ObjectId, ref: 'fs.files' },
-    squareImage: { type: Schema.Types.ObjectId, ref: 'fs.files' },
+const historySchema = new mongoose.Schema({
+    description: {
+        type: String,
+        required: true
+    },
+    mainImage: {
+        type: String,
+        required: true
+    },
+    squareImage: {
+        type: String,
+        required: true
+    }
 });
 
-module.exports = mongoose.model('History', historySchema);
+const History = mongoose.model('History', historySchema);
+module.exports = History;

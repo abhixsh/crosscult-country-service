@@ -1,10 +1,19 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const traditionsSchema = new Schema({
-    description: { type: String, required: true },
-    mainImage: { type: Schema.Types.ObjectId, ref: 'fs.files' },
-    squareImage: { type: Schema.Types.ObjectId, ref: 'fs.files' },
+const traditionsSchema = new mongoose.Schema({
+    description: {
+        type: String,
+        required: true
+    },
+    mainImage: {
+        type: String, 
+        required: true
+    },
+    squareImage: {
+        type: String, 
+        required: true
+    }
 });
 
-module.exports = mongoose.model('Traditions', traditionsSchema);
+const Traditions = mongoose.model('Traditions', traditionsSchema);
+module.exports = Traditions;
