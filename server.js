@@ -1,40 +1,44 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
+const dotenv = require('dotenv');
+const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
 const countryRoutes = require('./routes/countryRoutes');
-const historyRoutes = require('./routes/historyRoutes');
-const traditionsRoutes = require('./routes/traditionsRoutes');
-const foodRoutes = require('./routes/foodRoutes');
 
-// Initialize the app
+dotenv.config();
+
 const app = express();
 
-require('dotenv').config();
-
 // Middleware
-app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('Connected to MongoDB'))
-    .catch(err => console.error('MongoDB connection error: ', err));
+    .then(() => console.log('MongoDB connected'))
+    .catch((err) => console.log(err));
+
+// Swagger Setup
+const swaggerOptions = {
+    swaggerDefinition: require('./swagger.json'),
+    apis: ['./routes/countryRoutes.js']
+};
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Routes
-app.use('/country', countryRoutes);
-app.use('/history', historyRoutes);
-app.use('/traditions', traditionsRoutes);
-app.use('/food', foodRoutes);
+app.use('/api', countryRoutes);
 
-// Start the server
+// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-    console.log(`Swagger UI available at http://localhost:${PORT}/api-docs`);
+    console.log(`Server running on port ${PORT}`);
+    console.log(`Swagger documentation available at http://localhost:${PORT}/api-docs`);
 });
 
-module.exports = app;
+// Root route to display backend URL and Swagger URL
+app.get('/', (req, res) => {
+    res.send(`
+        Backend is running on port ${PORT}<br>
+        Swagger documentation is available at <a href="http://localhost:${PORT}/api-docs" target="_blank">http://localhost:${PORT}/api-docs</a>
+    `);
+});

@@ -2,11 +2,10 @@ const express = require('express');
 const router = express.Router();
 const countryController = require('../controllers/countryController');
 
-// CRUD Routes for Country
-router.post('/', countryController.createCountry);
-router.get('/', countryController.getAllCountries);
-router.get('/:id', countryController.getCountryById);
-router.put('/:id', countryController.updateCountry);
-router.delete('/:id', countryController.deleteCountry);
+router.get('/countries', countryController.getCountries);
+router.get('/country/:id', countryController.getCountryById);
+router.post('/country', countryController.createCountry);
+router.put('/country/:id', countryController.updateCountry);
+router.delete('/country/:id', countryController.deleteCountry);
 
 module.exports = router;

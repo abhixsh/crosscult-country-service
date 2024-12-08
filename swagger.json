@@ -1,109 +1,49 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Cultural API",
-        "description": "API for managing information about countries, history, traditions, and food.",
-        "version": "1.0.0"
+        "description": "API for managing countries and related information",
+        "version": "1.0.0",
+        "title": "Country API"
     },
     "host": "localhost:3000",
-    "basePath": "/",
+    "basePath": "/api",
     "schemes": [
         "http"
     ],
     "paths": {
-        "/country": {
-            "post": {
-                "summary": "Create a new country",
-                "description": "Adds a new country to the database.",
-                "tags": [
-                    "Countries"
-                ],
-                "parameters": [
-                    {
-                        "name": "name",
-                        "in": "body",
-                        "description": "Name of the country",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "image",
-                        "in": "body",
-                        "description": "Image URL of the country",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "description",
-                        "in": "body",
-                        "description": "Description of the country",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "historyId",
-                        "in": "body",
-                        "description": "ID of the history document to link",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "traditionsId",
-                        "in": "body",
-                        "description": "ID of the traditions document to link",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "foodId",
-                        "in": "body",
-                        "description": "ID of the food document to link",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Country created successfully",
-                        "schema": {
-                            "$ref": "#/definitions/Country"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            },
+        "/countries": {
             "get": {
                 "summary": "Get all countries",
-                "description": "Retrieves all countries with linked history, traditions, and food.",
-                "tags": [
-                    "Countries"
-                ],
                 "responses": {
                     "200": {
-                        "description": "Successfully retrieved list of countries",
+                        "description": "List of countries",
                         "schema": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/Country"
                             }
                         }
-                    },
-                    "400": {
-                        "description": "Bad request"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new country",
+                "parameters": [
+                    {
+                        "name": "country",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Country"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Country created",
+                        "schema": {
+                            "$ref": "#/definitions/Country"
+                        }
                     }
                 }
             }
@@ -111,52 +51,38 @@
         "/country/{id}": {
             "get": {
                 "summary": "Get a country by ID",
-                "description": "Retrieves a specific country by its ID.",
-                "tags": [
-                    "Countries"
-                ],
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the country",
                         "required": true,
                         "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successfully retrieved country",
+                        "description": "Country data",
                         "schema": {
                             "$ref": "#/definitions/Country"
                         }
                     },
                     "404": {
                         "description": "Country not found"
-                    },
-                    "400": {
-                        "description": "Bad request"
                     }
                 }
             },
             "put": {
                 "summary": "Update a country",
-                "description": "Updates the details of a specific country.",
-                "tags": [
-                    "Countries"
-                ],
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the country to update",
                         "required": true,
                         "type": "string"
                     },
                     {
-                        "name": "body",
+                        "name": "country",
                         "in": "body",
-                        "description": "Updated country data",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/Country"
@@ -165,547 +91,32 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Country updated successfully",
+                        "description": "Country updated",
                         "schema": {
                             "$ref": "#/definitions/Country"
                         }
                     },
                     "404": {
                         "description": "Country not found"
-                    },
-                    "400": {
-                        "description": "Bad request"
                     }
                 }
             },
             "delete": {
                 "summary": "Delete a country",
-                "description": "Deletes a specific country.",
-                "tags": [
-                    "Countries"
-                ],
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the country to delete",
                         "required": true,
                         "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Country deleted successfully"
+                        "description": "Country deleted"
                     },
                     "404": {
                         "description": "Country not found"
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            }
-        },
-        "/food": {
-            "post": {
-                "summary": "Create a new food",
-                "description": "Adds a new food item to the database.",
-                "tags": [
-                    "Food"
-                ],
-                "parameters": [
-                    {
-                        "name": "description",
-                        "in": "body",
-                        "description": "Description of the food",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "mainImage",
-                        "in": "body",
-                        "description": "Main image URL of the food",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "squareImage",
-                        "in": "body",
-                        "description": "Square image URL of the food",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Food created successfully",
-                        "schema": {
-                            "$ref": "#/definitions/Food"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            },
-            "get": {
-                "summary": "Get all food items",
-                "description": "Retrieves all food items.",
-                "tags": [
-                    "Food"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfully retrieved list of foods",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Food"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            }
-        },
-        "/food/{id}": {
-            "get": {
-                "summary": "Get a food item by ID",
-                "description": "Retrieves a specific food item by its ID.",
-                "tags": [
-                    "Food"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the food item",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfully retrieved food item",
-                        "schema": {
-                            "$ref": "#/definitions/Food"
-                        }
-                    },
-                    "404": {
-                        "description": "Food item not found"
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            },
-            "put": {
-                "summary": "Update a food item",
-                "description": "Updates the details of a specific food item.",
-                "tags": [
-                    "Food"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the food item to update",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Updated food item data",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/Food"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Food item updated successfully",
-                        "schema": {
-                            "$ref": "#/definitions/Food"
-                        }
-                    },
-                    "404": {
-                        "description": "Food item not found"
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            },
-            "delete": {
-                "summary": "Delete a food item",
-                "description": "Deletes a specific food item.",
-                "tags": [
-                    "Food"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the food item to delete",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Food item deleted successfully"
-                    },
-                    "404": {
-                        "description": "Food item not found"
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            }
-        },
-        "/history": {
-            "post": {
-                "summary": "Create a new history",
-                "description": "Adds a new history record.",
-                "tags": [
-                    "History"
-                ],
-                "parameters": [
-                    {
-                        "name": "description",
-                        "in": "body",
-                        "description": "Description of the history",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "mainImage",
-                        "in": "body",
-                        "description": "Main image URL for history",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "squareImage",
-                        "in": "body",
-                        "description": "Square image URL for history",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "History created successfully",
-                        "schema": {
-                            "$ref": "#/definitions/History"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            },
-            "get": {
-                "summary": "Get all history records",
-                "description": "Retrieves all history records.",
-                "tags": [
-                    "History"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfully retrieved history records",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/History"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            }
-        },
-        "/history/{id}": {
-            "get": {
-                "summary": "Get a history by ID",
-                "description": "Retrieves a specific history record by its ID.",
-                "tags": [
-                    "History"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the history",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfully retrieved history record",
-                        "schema": {
-                            "$ref": "#/definitions/History"
-                        }
-                    },
-                    "404": {
-                        "description": "History record not found"
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            },
-            "put": {
-                "summary": "Update a history record",
-                "description": "Updates the details of a specific history record.",
-                "tags": [
-                    "History"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the history record to update",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Updated history record data",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/History"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "History record updated successfully",
-                        "schema": {
-                            "$ref": "#/definitions/History"
-                        }
-                    },
-                    "404": {
-                        "description": "History record not found"
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            },
-            "delete": {
-                "summary": "Delete a history record",
-                "description": "Deletes a specific history record.",
-                "tags": [
-                    "History"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the history record to delete",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "History record deleted successfully"
-                    },
-                    "404": {
-                        "description": "History record not found"
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            }
-        },
-        "/traditions": {
-            "post": {
-                "summary": "Create a new tradition",
-                "description": "Adds a new tradition record.",
-                "tags": [
-                    "Traditions"
-                ],
-                "parameters": [
-                    {
-                        "name": "description",
-                        "in": "body",
-                        "description": "Description of the tradition",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "mainImage",
-                        "in": "body",
-                        "description": "Main image URL for tradition",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "squareImage",
-                        "in": "body",
-                        "description": "Square image URL for tradition",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Tradition created successfully",
-                        "schema": {
-                            "$ref": "#/definitions/Tradition"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            },
-            "get": {
-                "summary": "Get all traditions",
-                "description": "Retrieves all traditions records.",
-                "tags": [
-                    "Traditions"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfully retrieved traditions",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Tradition"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            }
-        },
-        "/traditions/{id}": {
-            "get": {
-                "summary": "Get a tradition by ID",
-                "description": "Retrieves a specific tradition by its ID.",
-                "tags": [
-                    "Traditions"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the tradition",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successfully retrieved tradition record",
-                        "schema": {
-                            "$ref": "#/definitions/Tradition"
-                        }
-                    },
-                    "404": {
-                        "description": "Tradition record not found"
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            },
-            "put": {
-                "summary": "Update a tradition record",
-                "description": "Updates the details of a specific tradition record.",
-                "tags": [
-                    "Traditions"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the tradition record to update",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Updated tradition record data",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/Tradition"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Tradition record updated successfully",
-                        "schema": {
-                            "$ref": "#/definitions/Tradition"
-                        }
-                    },
-                    "404": {
-                        "description": "Tradition record not found"
-                    },
-                    "400": {
-                        "description": "Bad request"
-                    }
-                }
-            },
-            "delete": {
-                "summary": "Delete a tradition record",
-                "description": "Deletes a specific tradition record.",
-                "tags": [
-                    "Traditions"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the tradition record to delete",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Tradition record deleted successfully"
-                    },
-                    "404": {
-                        "description": "Tradition record not found"
-                    },
-                    "400": {
-                        "description": "Bad request"
                     }
                 }
             }
@@ -715,64 +126,40 @@
         "Country": {
             "type": "object",
             "properties": {
-                "name": {
+                "country_name": {
                     "type": "string"
                 },
-                "image": {
+                "country_img": {
                     "type": "string"
                 },
-                "description": {
+                "country_desc": {
                     "type": "string"
                 },
-                "historyId": {
+                "history_main_img": {
                     "type": "string"
                 },
-                "traditionsId": {
+                "history_small_img": {
                     "type": "string"
                 },
-                "foodId": {
-                    "type": "string"
-                }
-            }
-        },
-        "Food": {
-            "type": "object",
-            "properties": {
-                "description": {
+                "history_desc": {
                     "type": "string"
                 },
-                "mainImage": {
+                "traditions_main_img": {
                     "type": "string"
                 },
-                "squareImage": {
-                    "type": "string"
-                }
-            }
-        },
-        "History": {
-            "type": "object",
-            "properties": {
-                "description": {
+                "traditions_small_img": {
                     "type": "string"
                 },
-                "mainImage": {
+                "traditions_desc": {
                     "type": "string"
                 },
-                "squareImage": {
-                    "type": "string"
-                }
-            }
-        },
-        "Tradition": {
-            "type": "object",
-            "properties": {
-                "description": {
+                "food_main_img": {
                     "type": "string"
                 },
-                "mainImage": {
+                "food_small_img": {
                     "type": "string"
                 },
-                "squareImage": {
+                "food_desc": {
                     "type": "string"
                 }
             }
