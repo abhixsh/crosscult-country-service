@@ -5,61 +5,77 @@
         "description": "API for managing countries, history, traditions, and food",
         "version": "1.0.0"
     },
+    "host": "localhost:3000",
+    "basePath": "/api",
+    "schemes": [
+        "http"
+    ],
     "paths": {
-        "/country": {
+        "/countries": {
             "post": {
                 "summary": "Create a new country",
+                "tags": [
+                    "Countries"
+                ],
                 "parameters": [
                     {
-                        "name": "name",
+                        "name": "country",
                         "in": "body",
-                        "description": "Name of the country",
+                        "description": "Country object to be created",
                         "required": true,
                         "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "image",
-                        "in": "body",
-                        "description": "Image URL",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "description",
-                        "in": "body",
-                        "description": "Description of the country",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/Country"
                         }
                     }
                 ],
                 "responses": {
                     "201": {
                         "description": "Country created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Get all countries",
+                "tags": [
+                    "Countries"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of countries",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Country"
+                            }
+                        }
                     }
                 }
             }
         },
-        "/country/{id}": {
+        "/countries/{id}": {
             "get": {
                 "summary": "Get a country by ID",
+                "tags": [
+                    "Countries"
+                ],
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "ID of the country to fetch",
                         "required": true,
-                        "type": "string",
-                        "description": "ID of the country"
+                        "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Country details"
+                        "description": "Country details",
+                        "schema": {
+                            "$ref": "#/definitions/Country"
+                        }
                     },
                     "404": {
                         "description": "Country not found"
@@ -68,27 +84,30 @@
             },
             "put": {
                 "summary": "Update a country",
+                "tags": [
+                    "Countries"
+                ],
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "ID of the country to update",
                         "required": true,
-                        "type": "string",
-                        "description": "ID of the country"
+                        "type": "string"
                     },
                     {
-                        "name": "name",
+                        "name": "country",
                         "in": "body",
-                        "description": "Name of the country",
+                        "description": "Updated country object",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/Country"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Country updated"
+                        "description": "Country updated successfully"
                     },
                     "404": {
                         "description": "Country not found"
@@ -97,22 +116,468 @@
             },
             "delete": {
                 "summary": "Delete a country",
+                "tags": [
+                    "Countries"
+                ],
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "ID of the country to delete",
                         "required": true,
-                        "type": "string",
-                        "description": "ID of the country"
+                        "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Country deleted"
+                        "description": "Country deleted successfully"
                     },
                     "404": {
                         "description": "Country not found"
                     }
+                }
+            }
+        },
+        "/history": {
+            "post": {
+                "summary": "Create a new history",
+                "tags": [
+                    "History"
+                ],
+                "parameters": [
+                    {
+                        "name": "history",
+                        "in": "body",
+                        "description": "History object to be created",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/History"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "History created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Get all history entries",
+                "tags": [
+                    "History"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of history entries",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/History"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/history/{id}": {
+            "get": {
+                "summary": "Get a history entry by ID",
+                "tags": [
+                    "History"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the history entry",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "History details",
+                        "schema": {
+                            "$ref": "#/definitions/History"
+                        }
+                    },
+                    "404": {
+                        "description": "History not found"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update a history entry",
+                "tags": [
+                    "History"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the history entry to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "history",
+                        "in": "body",
+                        "description": "Updated history object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/History"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "History updated successfully"
+                    },
+                    "404": {
+                        "description": "History not found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a history entry",
+                "tags": [
+                    "History"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the history entry to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "History deleted successfully"
+                    },
+                    "404": {
+                        "description": "History not found"
+                    }
+                }
+            }
+        },
+        "/traditions": {
+            "post": {
+                "summary": "Create a new tradition",
+                "tags": [
+                    "Traditions"
+                ],
+                "parameters": [
+                    {
+                        "name": "tradition",
+                        "in": "body",
+                        "description": "Tradition object to be created",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Tradition"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Tradition created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Get all traditions",
+                "tags": [
+                    "Traditions"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of traditions",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Tradition"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/traditions/{id}": {
+            "get": {
+                "summary": "Get a tradition by ID",
+                "tags": [
+                    "Traditions"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the tradition to fetch",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tradition details",
+                        "schema": {
+                            "$ref": "#/definitions/Tradition"
+                        }
+                    },
+                    "404": {
+                        "description": "Tradition not found"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update a tradition",
+                "tags": [
+                    "Traditions"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the tradition to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "tradition",
+                        "in": "body",
+                        "description": "Updated tradition object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Tradition"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tradition updated successfully"
+                    },
+                    "404": {
+                        "description": "Tradition not found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a tradition",
+                "tags": [
+                    "Traditions"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the tradition to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tradition deleted successfully"
+                    },
+                    "404": {
+                        "description": "Tradition not found"
+                    }
+                }
+            }
+        },
+        "/food": {
+            "post": {
+                "summary": "Create a new food",
+                "tags": [
+                    "Food"
+                ],
+                "parameters": [
+                    {
+                        "name": "food",
+                        "in": "body",
+                        "description": "Food object to be created",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Food"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Food created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Get all food items",
+                "tags": [
+                    "Food"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of food items",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Food"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/food/{id}": {
+            "get": {
+                "summary": "Get a food item by ID",
+                "tags": [
+                    "Food"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the food item to fetch",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Food item details",
+                        "schema": {
+                            "$ref": "#/definitions/Food"
+                        }
+                    },
+                    "404": {
+                        "description": "Food item not found"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update a food item",
+                "tags": [
+                    "Food"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the food item to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "food",
+                        "in": "body",
+                        "description": "Updated food object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Food"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Food item updated successfully"
+                    },
+                    "404": {
+                        "description": "Food item not found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a food item",
+                "tags": [
+                    "Food"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the food item to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Food item deleted successfully"
+                    },
+                    "404": {
+                        "description": "Food item not found"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Country": {
+            "type": "object",
+            "required": [
+                "name",
+                "code"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "code": {
+                    "type": "string"
+                }
+            }
+        },
+        "History": {
+            "type": "object",
+            "required": [
+                "event",
+                "year"
+            ],
+            "properties": {
+                "event": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Tradition": {
+            "type": "object",
+            "required": [
+                "name",
+                "description"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                }
+            }
+        },
+        "Food": {
+            "type": "object",
+            "required": [
+                "name",
+                "origin"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "origin": {
+                    "type": "string"
                 }
             }
         }

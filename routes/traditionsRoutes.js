@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const traditionsController = require('../controllers/traditionsController');
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
 
-router.post('/create', upload.fields([
-    { name: 'mainImage', maxCount: 1 },
-    { name: 'squareImage', maxCount: 1 }
-]), traditionsController.createTraditions);
+// CRUD Routes for Traditions
+router.post('/', traditionsController.createTradition);
+router.get('/', traditionsController.getAllTraditions);
+router.get('/:id', traditionsController.getTraditionById);
+router.put('/:id', traditionsController.updateTradition);
+router.delete('/:id', traditionsController.deleteTradition);
 
 module.exports = router;
