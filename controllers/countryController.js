@@ -25,7 +25,7 @@ exports.getCountryById = async (req, res) => {
 
 // Create a new country
 exports.createCountry = async (req, res) => {
-    const { country_name, country_img, country_desc, history_main_img, history_small_img, history_desc, traditions_main_img, traditions_small_img, traditions_desc, food_main_img, food_small_img, food_desc } = req.body;
+    const { country_name, country_img, country_desc, history_main_img, history_small_img, history_desc, traditions_main_img, traditions_small_img, traditions_desc, food_main_img, food_small_img, food_desc, flag_img } = req.body;
 
     const newCountry = new Country({
         country_name,
@@ -39,7 +39,8 @@ exports.createCountry = async (req, res) => {
         traditions_desc,
         food_main_img,
         food_small_img,
-        food_desc
+        food_desc,
+        flag_img
     });
 
     try {

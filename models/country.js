@@ -12,7 +12,8 @@ const countrySchema = new mongoose.Schema({
     traditions_desc: { type: String },
     food_main_img: { type: String },
     food_small_img: { type: String },
-    food_desc: { type: String }
+    food_desc: { type: String },
+    flag_img: { type: String }
 });
 
 module.exports = mongoose.model('Country', countrySchema);
