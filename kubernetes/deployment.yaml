@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: crosscult-country-service
-        image: crosscultcounty.azurecr.io/crosscult-country-service:${{ github.sha }}
+        image: crosscultcounty.azurecr.io/crosscult-country-service:v1
         ports:
         - containerPort: 80
