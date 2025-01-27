@@ -58,14 +58,20 @@ jobs:
           kubectl apply -f kubernetes/deployment.yaml
           kubectl apply -f kubernetes/service.yaml
 
-      # Step 10: Check if AKS is working (optional)
-      - name: Check AKS status
+      # Step 10: Wait for resources to be available (you can adjust the wait time)
+      - name: Wait for pod to be ready
+        run: |
+          kubectl wait --for=condition=ready pod -l app=crosscult-country-service --timeout=600s
+          kubectl get pods
+
+      # Step 11: Check if the AKS cluster is running correctly
+      - name: Check AKS nodes and pods
         run: |
           kubectl get nodes
           kubectl get pods
           kubectl get services
 
-      # Step 11: Output external API URL (for LoadBalancer type service)
+      # Step 12: Check external service URL (LoadBalancer IP)
       - name: Get External API URL
         run: |
           kubectl get services -o wide
