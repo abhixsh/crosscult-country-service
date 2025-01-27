@@ -1,0 +1,72 @@
+name: Deploy to AKS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Azure CLI
+      - name: Set up Azure CLI
+        uses: azure/cli-action@v1
+        with:
+          enable-AzureCLIDevShell: true
+
+      # Step 3: Log in to Azure
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Step 4: Log in to Azure Container Registry (ACR)
+      - name: Log in to Azure Container Registry
+        run: |
+          az acr login --name crosscultcounty
+
+      # Step 5: Create .env file with values from GitHub Secrets
+      - name: Create .env file
+        run: |
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" > .env
+          echo "PORT=${{ secrets.PORT }}" >> .env
+
+      # Step 6: Install npm dependencies
+      - name: Install dependencies
+        run: |
+          npm install
+
+      # Step 7: Build and push Docker image to ACR
+      - name: Build and push Docker image
+        run: |
+          docker build -t crosscultcounty.azurecr.io/crosscult-country-service:${{ github.sha }} .
+          docker push crosscultcounty.azurecr.io/crosscult-country-service:${{ github.sha }}
+
+      # Step 8: Set kubectl context to AKS
+      - name: Set kubectl context to AKS
+        run: |
+          az aks get-credentials --resource-group CrossCultGroup --name CrossCult
+
+      # Step 9: Deploy to AKS (Create/update deployments and services)
+      - name: Deploy to AKS
+        run: |
+          kubectl apply -f kubernetes/deployment.yaml
+          kubectl apply -f kubernetes/service.yaml
+
+      # Step 10: Check if AKS is working (optional)
+      - name: Check AKS status
+        run: |
+          kubectl get nodes
+          kubectl get pods
+          kubectl get services
+
+      # Step 11: Output external API URL (for LoadBalancer type service)
+      - name: Get External API URL
+        run: |
+          kubectl get services -o wide
