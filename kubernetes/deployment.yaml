@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: crosscult-country-service
-  labels:
-    app: crosscult-country-service
 spec:
   replicas: 3
   selector:
@@ -19,14 +17,3 @@ spec:
         image: crosscultcounty.azurecr.io/crosscult-country-service:${{ github.sha }}
         ports:
         - containerPort: 80
-        env:
-        - name: ENVIRONMENT
-          value: "production"
-        # If you need any additional environment variables, define them here
-        resources:
-          requests:
-            memory: "512Mi"
-            cpu: "500m"
-          limits:
-            memory: "1Gi"
-            cpu: "1000m"
