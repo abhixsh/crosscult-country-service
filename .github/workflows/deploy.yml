@@ -61,7 +61,7 @@ jobs:
       # Step 10: Wait for resources to be available (you can adjust the wait time)
       - name: Wait for pod to be ready
         run: |
-          kubectl wait --for=condition=ready pod -l app=crosscult-country-service --timeout=600s
+          kubectl wait --for=condition=ready pod -l app=crosscult-country-service --timeout=100s
           kubectl get pods
 
       # Step 11: Check if the AKS cluster is running correctly
