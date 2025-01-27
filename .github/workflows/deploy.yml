@@ -16,7 +16,7 @@ jobs:
 
       # Step 2: Set up Azure CLI
       - name: Set up Azure CLI
-        uses: azure/cli-action@v1
+        uses: azure/setup-azure-cli@v1
         with:
           enable-AzureCLIDevShell: true
 
