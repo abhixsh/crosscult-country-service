@@ -14,58 +14,64 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      # Step 2: Manually set up Azure CLI
+      # Step 2: Install Azure CLI
       - name: Install Azure CLI
         run: |
           curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
-      # Step 3: Log in to Azure
+      # Step 3: Install kubectl
+      - name: Install kubectl
+        run: |
+          curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+          sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+      # Step 4: Log in to Azure
       - name: Log in to Azure
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # Step 4: Log in to Azure Container Registry (ACR)
+      # Step 5: Log in to Azure Container Registry (ACR)
       - name: Log in to Azure Container Registry
         run: |
           az acr login --name crosscultcounty
 
-      # Step 5: Create .env file with values from GitHub Secrets
+      # Step 6: Create .env file with values from GitHub Secrets
       - name: Create .env file
         run: |
           echo "MONGO_URI=${{ secrets.MONGO_URI }}" > .env
           echo "PORT=${{ secrets.PORT }}" >> .env
 
-      # Step 6: Install npm dependencies
+      # Step 7: Install npm dependencies
       - name: Install dependencies
         run: |
           npm install
 
-      # Step 7: Build and push Docker image to ACR
+      # Step 8: Build and push Docker image to ACR
       - name: Build and push Docker image
         run: |
           docker build -t crosscultcounty.azurecr.io/crosscult-country-service:${{ github.sha }} .
           docker push crosscultcounty.azurecr.io/crosscult-country-service:${{ github.sha }}
 
-      # Step 8: Set kubectl context to AKS
+      # Step 9: Set kubectl context to AKS
       - name: Set kubectl context to AKS
         run: |
           az aks get-credentials --resource-group CrossCultGroup --name CrossCult
 
-      # Step 9: Deploy to AKS (Create/update deployments and services)
+      # Step 10: Deploy to AKS (Create/update deployments and services)
       - name: Deploy to AKS
         run: |
           kubectl apply -f kubernetes/deployment.yaml
           kubectl apply -f kubernetes/service.yaml
 
-      # Step 10: Check if AKS is working (optional)
+      # Step 11: Check if AKS is working (optional)
       - name: Check AKS status
         run: |
           kubectl get nodes
           kubectl get pods
           kubectl get services
 
-      # Step 11: Output external API URL (for LoadBalancer type service)
+      # Step 12: Output external API URL (for LoadBalancer type service)
       - name: Get External API URL
         run: |
           kubectl get services -o wide
